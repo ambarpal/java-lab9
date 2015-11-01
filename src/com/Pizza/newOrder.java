@@ -30,7 +30,8 @@ public class newOrder extends HttpServlet {
 		}
 		else if (uid != null && UserPool.getUser(uid) == null){
 			response.getWriter().println("Old Cookie Remaining: Please restart ordering process");
-			request.getSession(true);
+			hs.removeAttribute("uid");
+			//hs = request.getSession(true);
 		}
 		else
 			response.sendRedirect("selectPizza");

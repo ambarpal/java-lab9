@@ -15,6 +15,12 @@ public class User {
 		this.uid = uid;
 		this.order = order;
 	}
+	public void incrementOrderStatus(){
+		if (this.orderStatus.equals("ordered")) this.orderStatus = "processed";
+		else if (this.orderStatus.equals("processed")) this.orderStatus = "baked";
+		else if (this.orderStatus.equals("baked")) this.orderStatus = "dispatched";
+		else if (this.orderStatus.equals("dispatched")) this.orderStatus = "delivered";
+	}
 	public String getOrderStatus() {
 		return orderStatus;
 	}
