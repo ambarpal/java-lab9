@@ -6,6 +6,7 @@ public class User {
 	String address;
 	Integer uid;
 	String order;
+	String orderStatus;
 	public User(String name, String contact, String address, Integer uid, String order) {
 		super();
 		this.name = name;
@@ -13,6 +14,12 @@ public class User {
 		this.address = address;
 		this.uid = uid;
 		this.order = order;
+	}
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 	public String getOrder() {
 		return order;

@@ -19,18 +19,9 @@ import com.Pizza.utils.UserPool;
 @WebServlet("/getDetails")
 public class getDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public getDetails() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter respWriter = response.getWriter();
 		try{
@@ -38,9 +29,15 @@ public class getDetails extends HttpServlet {
 			if (curUid == null) respWriter.println("You must place an order first");
 			else{
 				HttpSession hs = request.getSession();
-				String order = UserPool.getUser(curUid).getOrder();
-				respWriter.println("UID: " + curUid);
-				respWriter.println("Order: " + order);
+				User curUser = UserPool.getUser(curUid);
+				if (curUser == null)
+					respWriter.println("Some internal error occurred");
+				else{
+					String order = curUser.getOrder();
+					response.setContentType("text/html");
+					String htmlString = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Contact Details</title></head><body>" + "<h2>UID: " + curUid + "</h2>\n" + "<h2>Order: " + order + "</h2>\n" +"<form method='post' action=\"getDetails\"><table><tr><td>Name*:</td><td> <input type='text' name='name' required/> <br/> </td> </tr><tr><td>Address*:</td><td> <input type='text' name='address' required/> <br/> </td> </tr><tr><td>Mobile Number*:</td><td> <input type='text' name='contact' required/> <br/> </td> </tr><tr><td><input type=\"submit\" value=\"Submit\" /></td></tr></table></form></body></html>";
+					respWriter.print(htmlString);
+				}
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -48,13 +45,36 @@ public class getDetails extends HttpServlet {
 			respWriter.close();
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		PrintWriter respWriter = response.getWriter();
+		try{
+			Integer curUid = (Integer)request.getSession().getAttribute("uid");
+			if (curUid == null) respWriter.println("Some Internal Error Occurred(2)");
+			else{
+				HttpSession hs = request.getSession();
+				String name = request.getParameter("name");
+				String address = request.getParameter("address");
+				String contact = request.getParameter("contact");
+				hs.setAttribute("p1", name);
+				hs.setAttribute("p2", address);
+				hs.setAttribute("p3", contact);
+				User curUser = UserPool.getUser(curUid);
+				if (curUser != null){
+					curUser.setName(name);
+					curUser.setAddress(address);
+					curUser.setContact(contact);
+					curUser.setOrderStatus("ordered");
+					response.setContentType("text/html");
+					String htmlString = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Order Status</title></head><body><h2>Order ID " + curUser.getUid() + "</h2><br><h2>Order: " + curUser.getOrder() + "</h2><br><h3>Name: " + curUser.getName() + "</h3><br><h3>Address:" + curUser.getAddress() + " </h3><br><h3>Contact:"+ curUser.getContact() +" </h3><br><h1>Order Status:"+ curUser.getOrderStatus() +" </h1><br></body></html>";
+					respWriter.print(htmlString);
+				}
+				else respWriter.println("User not found");
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally{
+			respWriter.close();
+		}
 	}
 
 }

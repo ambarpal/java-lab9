@@ -29,8 +29,10 @@ public class selectPizza extends HttpServlet {
 			Integer curUid = (Integer)request.getSession().getAttribute("uid");
 			if (curUid == null) respWriter.println("You must place an order first");
 			else{
-			   // response.setContentType("text/html");
-			   response.sendRedirect("selectPizzaHTML.html");
+			    response.setContentType("text/html");
+			    String htmlString = "<html><head><title></title></head><body><h3>Your OrderID is: " + curUid + "</h3><br><form method='post' action=\"selectPizza\"><table><tr><td>P1:</td><td><input type='radio' name='p1' value='Small'/>Small<input type='radio' name='p1' value='Medium'/>Medium<input type='radio' name='p1' value='Large'/>Large</td></tr><tr><td>P2:</td><td><input type='radio' name='p2' value='Small'/>Small<input type='radio' name='p2' value='Medium'/>Medium<input type='radio' name='p2' value='Large'/>Large</td></tr><tr><td>P3:</td><td><input type='radio' name='p3' value='Small'/>Small<input type='radio' name='p3' value='Medium'/>Medium<input type='radio' name='p3' value='Large'/>Large</td></tr></table><input type=\"submit\" value=\"submit\"></form></body></html>";
+			    respWriter.write(htmlString);
+			    // response.sendRedirect("selectPizzaHTML.html");
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -57,6 +59,7 @@ public class selectPizza extends HttpServlet {
 				if (curUser != null) curUser.setOrder(order);
 //				respWriter.println("UID: " + curUid);
 //				respWriter.println("Order: " + order);
+				response.sendRedirect("getDetails");
 			}
 		} catch(Exception e){
 			e.printStackTrace();
