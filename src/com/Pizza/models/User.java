@@ -16,10 +16,11 @@ public class User {
 		this.order = order;
 	}
 	public void incrementOrderStatus(){
-		if (this.orderStatus.equals("ordered")) this.orderStatus = "processed";
-		else if (this.orderStatus.equals("processed")) this.orderStatus = "baked";
-		else if (this.orderStatus.equals("baked")) this.orderStatus = "dispatched";
-		else if (this.orderStatus.equals("dispatched")) this.orderStatus = "delivered";
+		if (this.orderStatus.equals("Order Placed")) this.orderStatus = "Preparation";
+		else if (this.orderStatus.equals("Preparation")) this.orderStatus = "Bake";
+		else if (this.orderStatus.equals("Bake")) this.orderStatus = "Quality Check";
+		else if (this.orderStatus.equals("Quality Check")) this.orderStatus = "Out for Delivery";
+		else if (this.orderStatus.equals("Out for Delivery")) this.orderStatus = "Delivered";
 	}
 	public String getOrderStatus() {
 		return orderStatus;

@@ -60,11 +60,11 @@ public class getDetails extends HttpServlet {
 				String address = request.getParameter("address");
 				String contact = request.getParameter("contact");
 				User curUser = UserPool.getUser(curUid);
-				if (curUser != null && curUser.getOrderStatus() == null){
+				if (curUser != null){
 					curUser.setName(name);
 					curUser.setAddress(address);
 					curUser.setContact(contact);
-					curUser.setOrderStatus("ordered");
+					curUser.setOrderStatus("Preparation");
 					response.setContentType("text/html");
 					String htmlString = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Order Status</title></head><body><h2>Order ID " + curUser.getUid() + "</h2><br><h2>Order: " + curUser.getOrder() + "</h2><br><h3>Name: " + curUser.getName() + "</h3><br><h3>Address:" + curUser.getAddress() + " </h3><br><h3>Contact:"+ curUser.getContact() +" </h3><br><h1>Order Status:"+ curUser.getOrderStatus() +" </h1><br></body></html>";
 					respWriter.print(htmlString);

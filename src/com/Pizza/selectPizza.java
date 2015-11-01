@@ -30,7 +30,10 @@ public class selectPizza extends HttpServlet {
 			if (curUid == null) respWriter.println("You must place an order first");
 			else{
 			    response.setContentType("text/html");
-			    String htmlString = "<html><head><title></title></head><body><h3>Your OrderID is: " + curUid + "</h3><br><form method='post' action=\"selectPizza\"><table><tr><td>P1:</td><td><input type='radio' name='p1' value='Small'/>Small<input type='radio' name='p1' value='Medium'/>Medium<input type='radio' name='p1' value='Large'/>Large</td></tr><tr><td>P2:</td><td><input type='radio' name='p2' value='Small'/>Small<input type='radio' name='p2' value='Medium'/>Medium<input type='radio' name='p2' value='Large'/>Large</td></tr><tr><td>P3:</td><td><input type='radio' name='p3' value='Small'/>Small<input type='radio' name='p3' value='Medium'/>Medium<input type='radio' name='p3' value='Large'/>Large</td></tr></table><input type=\"submit\" value=\"submit\"></form></body></html>";
+			    User curUser = UserPool.getUser(curUid);
+			    String curOrder = "";
+			    if (curUser != null) curOrder = curUser.getOrder();
+			    String htmlString = "<html><head><title></title></head><body><h3>Your OrderID is: " + curUid + "</h3><br><h3>Your Current Order is: " + curOrder + "</h3><br><form method='post' action=\"selectPizza\"><table><tr><td>Double Cheese Margherita:</td><td><input type='radio' name='p1' value='Small'/>Small<input type='radio' name='p1' value='Medium'/>Medium<input type='radio' name='p1' value='Large'/>Large</td></tr><tr><td>Deluxe Veggie:</td><td><input type='radio' name='p2' value='Small'/>Small<input type='radio' name='p2' value='Medium'/>Medium<input type='radio' name='p2' value='Large'/>Large</td></tr><tr><td>Spicy Chicken:</td><td><input type='radio' name='p3' value='Small'/>Small<input type='radio' name='p3' value='Medium'/>Medium<input type='radio' name='p3' value='Large'/>Large</td></tr><tr><td>Paneer Overloaded:</td><td><input type='radio' name='p4' value='Small'/>Small<input type='radio' name='p4' value='Medium'/>Medium<input type='radio' name='p4' value='Large'/>Large</td></tr></table><input type=\"submit\" value=\"Order\"></form></body></html>";
 			    respWriter.write(htmlString);
 			    // response.sendRedirect("selectPizzaHTML.html");
 			}
@@ -41,7 +44,6 @@ public class selectPizza extends HttpServlet {
 		}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		PrintWriter respWriter = response.getWriter();
 		try{
 			Integer curUid = (Integer)request.getSession().getAttribute("uid");
@@ -49,14 +51,18 @@ public class selectPizza extends HttpServlet {
 			else{
 				HttpSession hs = request.getSession();
 				String order = "";
-				String p1 = request.getParameter("p1"); if (p1 != null) order += " p1: " + p1;
-				String p2 = request.getParameter("p2"); if (p2 != null) order += " p2: " + p2;
-				String p3 = request.getParameter("p3"); if (p3 != null) order += " p3: " + p3;
+				String p1 = request.getParameter("p1"); if (p1 != null) order += "<br>Double Cheese Margherita: " + p1;
+				String p2 = request.getParameter("p2"); if (p2 != null) order += "<br>Deluxe Veggie: " + p2;
+				String p3 = request.getParameter("p3"); if (p3 != null) order += "<br>Spicy Chicken: " + p3;
+				String p4 = request.getParameter("p4"); if (p4 != null) order += "<br>Paneer Overloaded: " + p4;
 				hs.setAttribute("p1", p1);
 				hs.setAttribute("p2", p2);
 				hs.setAttribute("p3", p3);
+				hs.setAttribute("p4", p4);
 				User curUser = UserPool.getUser(curUid);
-				if (curUser != null) curUser.setOrder(order);
+				if (curUser != null){
+					curUser.setOrder(order);
+				}
 //				respWriter.println("UID: " + curUid);
 //				respWriter.println("Order: " + order);
 				response.sendRedirect("getDetails");

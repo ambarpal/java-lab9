@@ -27,6 +27,7 @@ public class newOrder extends HttpServlet {
 			Integer curUID = UIDGenerator.genUID();
 			UserPool.addUser("", "", "", curUID);
 			hs.setAttribute("uid", new Integer(curUID));
+			response.sendRedirect("selectPizza");
 		}
 		else if (uid != null && UserPool.getUser(uid) == null){
 			response.setContentType("text/html");

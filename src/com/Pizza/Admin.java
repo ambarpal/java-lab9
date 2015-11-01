@@ -27,7 +27,8 @@ public class Admin extends HttpServlet {
 		    response.setContentType("text/html");
 		    String htmlString = "<html><head><title>Admin View</title></head><body><h1></h1><table>";
 		    for (User u : UserPool.users){
-		    	htmlString += "<tr><td>" + u.getUid() + "</td><td>" + u.getOrderStatus() + "</td><td><form method='post' action=\"Admin\"> <input type=\"hidden\" name=\"reqUID\" value=\"" + u.getUid() + "\"> <input type=\"submit\" value=\"Update\"> </form></td></tr>";
+		    	if (!u.getOrderStatus().equals("Delivered"))
+		    		htmlString += "<tr><td>" + u.getUid() + "</td><td>" + u.getOrderStatus() + "</td><td><form method='post' action=\"Admin\"> <input type=\"hidden\" name=\"reqUID\" value=\"" + u.getUid() + "\"> <input type=\"submit\" value=\"Update\"> </form></td></tr>";
 		    }
 		    htmlString += "</table></body></html>";
 		    respWriter.write(htmlString);
