@@ -13,7 +13,6 @@ import com.Pizza.utils.UserPool;
 
 /*
  * @author Ambar Pal 2014012
- * @author Palash Bansal 2014072
  */
 @WebServlet("/newOrder")
 public class newOrder extends HttpServlet {

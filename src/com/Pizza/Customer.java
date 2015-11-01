@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 /*
  * @author Ambar Pal, 2014012
- * @author Palash Bansal, 2014072
  */
 /**
  * Servlet implementation class Customer
