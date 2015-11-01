@@ -13,8 +13,9 @@ import javax.servlet.http.HttpSession;
 import com.Pizza.models.User;
 import com.Pizza.utils.UserPool;
 
-/**
- * Servlet implementation class getDetails
+/*
+ * @author Ambar Pal 2014012
+ * @author Palash Bansal 2014072
  */
 @WebServlet("/getDetails")
 public class getDetails extends HttpServlet {
@@ -32,10 +33,14 @@ public class getDetails extends HttpServlet {
 				User curUser = UserPool.getUser(curUid);
 				if (curUser == null)
 					respWriter.println("Some internal error occurred");
-				else{
+				else if(curUser != null && curUser.getOrderStatus() == null){
 					String order = curUser.getOrder();
 					response.setContentType("text/html");
 					String htmlString = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Contact Details</title></head><body>" + "<h2>UID: " + curUid + "</h2>\n" + "<h2>Order: " + order + "</h2>\n" +"<form method='post' action=\"getDetails\"><table><tr><td>Name*:</td><td> <input type='text' name='name' required/> <br/> </td> </tr><tr><td>Address*:</td><td> <input type='text' name='address' required/> <br/> </td> </tr><tr><td>Mobile Number*:</td><td> <input type='text' name='contact' required/> <br/> </td> </tr><tr><td><input type=\"submit\" value=\"Submit\" /></td></tr></table></form></body></html>";
+					respWriter.print(htmlString);
+				}
+				else if (curUser != null && curUser.getOrderStatus() != null){
+					String htmlString = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Order Status</title></head><body><h2>Order ID " + curUser.getUid() + "</h2><br><h2>Order: " + curUser.getOrder() + "</h2><br><h3>Name: " + curUser.getName() + "</h3><br><h3>Address:" + curUser.getAddress() + " </h3><br><h3>Contact:"+ curUser.getContact() +" </h3><br><h1>Order Status:"+ curUser.getOrderStatus() +" </h1><br></body></html>";
 					respWriter.print(htmlString);
 				}
 			}
@@ -55,11 +60,8 @@ public class getDetails extends HttpServlet {
 				String name = request.getParameter("name");
 				String address = request.getParameter("address");
 				String contact = request.getParameter("contact");
-				hs.setAttribute("p1", name);
-				hs.setAttribute("p2", address);
-				hs.setAttribute("p3", contact);
 				User curUser = UserPool.getUser(curUid);
-				if (curUser != null){
+				if (curUser != null && curUser.getOrderStatus() == null){
 					curUser.setName(name);
 					curUser.setAddress(address);
 					curUser.setContact(contact);

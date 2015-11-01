@@ -14,8 +14,9 @@ import javax.websocket.Session;
 import com.Pizza.models.User;
 import com.Pizza.utils.UserPool;
 
-/**
- * Servlet implementation class selectPizza
+/*
+ * @author Ambar Pal 2014012
+ * @author Palash Bansal 2014072
  */
 @WebServlet("/selectPizza")
 public class selectPizza extends HttpServlet {

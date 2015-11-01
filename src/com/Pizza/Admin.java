@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.Pizza.models.User;
 import com.Pizza.utils.UserPool;
 
-/**
- * Servlet implementation class Admin
+/*
+ * @author Ambar Pal 2014012
+ * @author Palash Bansal 2014072
  */
 @WebServlet("/Admin")
 public class Admin extends HttpServlet {

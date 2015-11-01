@@ -11,8 +11,9 @@ import javax.servlet.http.HttpSession;
 import com.Pizza.utils.UIDGenerator;
 import com.Pizza.utils.UserPool;
 
-/**
- * Servlet implementation class newOrder
+/*
+ * @author Ambar Pal 2014012
+ * @author Palash Bansal 2014072
  */
 @WebServlet("/newOrder")
 public class newOrder extends HttpServlet {
@@ -29,7 +30,8 @@ public class newOrder extends HttpServlet {
 			hs.setAttribute("uid", new Integer(curUID));
 		}
 		else if (uid != null && UserPool.getUser(uid) == null){
-			response.getWriter().println("Old Cookie Remaining: Please restart ordering process");
+			response.setContentType("text/html");
+			response.getWriter().println("Old Cookie Remaining: Please <b>refresh the page</b> to place the order again");
 			hs.removeAttribute("uid");
 			//hs = request.getSession(true);
 		}
@@ -37,7 +39,6 @@ public class newOrder extends HttpServlet {
 			response.sendRedirect("selectPizza");
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
