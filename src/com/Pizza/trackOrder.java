@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.Pizza.models.User;
+import com.Pizza.utils.UserPool;
+
 @WebServlet("/trackOrder")
 public class trackOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -14,10 +17,13 @@ public class trackOrder extends HttpServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String x = "<html><head><title>Track Order</title></head><body><br><form method='post' action=\"trackOrder\"><input type=\"text\" name=\"uidReq\"><input type=\"submit\" value=\"Query\"></form></body></html>";
+		response.getWriter().write(x);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		User u = UserPool.getUser(Integer.parseInt(request.getParameter("uidReq")));
+		if (u != null)
+			response.getWriter().write(u.getOrderStatus());
 	}
 
 }

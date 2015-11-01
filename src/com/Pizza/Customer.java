@@ -24,11 +24,11 @@ public class Customer extends HttpServlet {
     }
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Somebody sent a get request");
 		resp.setContentType("text/html;charset=UTF-8");
 		PrintWriter respWriter = resp.getWriter();
 		try{
-			respWriter.println("yo");
+			String x = "<html><head><title>Customer</title></head><body><form method='get' action=\"trackOrder\"><input type=\"submit\" value=\"Track\"></form><br><form method='get' action=\"newOrder\"><input type=\"submit\" value=\"New Order\"></form></body></html>";
+			respWriter.println(x);
 		} catch(Exception e){
 			e.printStackTrace();
 		} finally{
@@ -37,14 +37,6 @@ public class Customer extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PrintWriter respWriter = resp.getWriter();
-		try{
-			String x = req.getParameter("user");
-			respWriter.println(x);
-		} catch(Exception e){
-			e.printStackTrace();
-		} finally{
-			respWriter.close();
-		}
+		doGet(req, resp);
 	}
 }
